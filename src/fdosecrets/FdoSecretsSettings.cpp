@@ -85,16 +85,6 @@ namespace FdoSecrets
         config()->set(Config::FdoSecrets_UnlockBeforeSearch, unlockBeforeSearch);
     }
 
-    QUuid FdoSecretsSettings::exposedGroup(const QSharedPointer<Database>& db) const
-    {
-        return exposedGroup(db.data());
-    }
-
-    void FdoSecretsSettings::setExposedGroup(const QSharedPointer<Database>& db, const QUuid& group)
-    {
-        setExposedGroup(db.data(), group);
-    }
-
     QUuid FdoSecretsSettings::exposedGroup(Database* db) const
     {
         return QUuid(db->metadata()->customData()->value(CustomData::FdoSecretsExposedGroup));

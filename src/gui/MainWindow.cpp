@@ -63,7 +63,8 @@
 #endif
 
 #ifdef KPXC_FEATURE_FDOSECRETS
-#include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsPluginGUI.h"
+#include "fdosecrets/FdoSecretsSettingsPage.h"
 #endif
 
 #ifdef KPXC_FEATURE_BROWSER
@@ -223,12 +224,14 @@ MainWindow::MainWindow()
             SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
 
 #ifdef KPXC_FEATURE_FDOSECRETS
-    auto fdoSS = new FdoSecretsPlugin(m_ui->tabWidget);
-    connect(fdoSS, &FdoSecretsPlugin::error, this, &MainWindow::showErrorMessage);
-    connect(fdoSS, &FdoSecretsPlugin::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
-    connect(fdoSS, &FdoSecretsPlugin::requestShowNotification, this, &MainWindow::displayDesktopNotification);
+    auto fdoSS = new FdoSecretsPluginGUI(m_ui->tabWidget);
+    connect(fdoSS, &FdoSecretsPluginGUI::error, this, &MainWindow::showErrorMessage);
+    connect(fdoSS, &FdoSecretsPluginGUI::requestShowNotification, this, &MainWindow::displayDesktopNotification);
     fdoSS->updateServiceState();
-    m_ui->settingsWidget->addSettingsPage(fdoSS);
+
+    auto fdoSSP = new FdoSecretsSettingsPage(fdoSS, m_ui->tabWidget);
+    connect(fdoSSP, &FdoSecretsSettingsPage::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
+    m_ui->settingsWidget->addSettingsPage(fdoSSP);
 #endif
 
     connect(YubiKey::instance(), SIGNAL(userInteractionRequest()), SLOT(showYubiKeyPopup()), Qt::QueuedConnection);
@@ -1757,8 +1760,7 @@ void MainWindow::processTrayIconTrigger()
                || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
         // Toggle window if is not in front.
 #ifdef Q_OS_WIN
-        // If on Windows, check if focus switched within the 500 milliseconds since
-        // clicking the tray icon removes focus from main window.
+        // If on Windows, check if the window has focus.
         if (isHidden() || (Clock::currentMilliSecondsSinceEpoch() - m_lastFocusOutTime) <= 500) {
 #else
         // If on Linux, check if the window has focus.
