@@ -96,7 +96,7 @@ namespace FdoSecrets
                 continue;
             }
 
-            // map from function name to dbus name
+            // map from function name to D-Bus name
             auto member = camelToPascal(mm.name());
             // also "remove" => "Delete" due to c++ keyword restriction
             if (member == "Remove") {
@@ -133,7 +133,7 @@ namespace FdoSecrets
                     md.outputTypes.append(id);
                     auto paramData = typeToWireType(id);
                     if (paramData.signature.isEmpty()) {
-                        qDebug() << "Internal error: unhandled new output type for dbus signature" << paramType;
+                        qDebug() << "Internal error: unhandled new output type for D-Bus signature" << paramType;
                         valid = false;
                         break;
                     }
@@ -150,7 +150,7 @@ namespace FdoSecrets
                 }
                 auto sig = typeToWireType(id).signature;
                 if (sig.isEmpty()) {
-                    qDebug() << "Internal error: unhandled new parameter type for dbus signature" << paramType;
+                    qDebug() << "Internal error: unhandled new parameter type for D-Bus signature" << paramType;
                     valid = false;
                     break;
                 }

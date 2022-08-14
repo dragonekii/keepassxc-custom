@@ -20,7 +20,7 @@ if(KPXC_FEATURE_FDOSECRETS)
         # setting storage
         FdoSecretsSettings.cpp
 
-        # dbus objects
+        # D-Bus objects
         dbus/DBusClient.cpp
         dbus/DBusMgr.cpp
         dbus/DBusDispatch.cpp

@@ -196,7 +196,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                                   SLOT(launchAtStartupRequested(uint, QVariantMap)));
 
     if (!res) {
-        qDebug() << "DBus Error: could not connect to org.freedesktop.portal.Request";
+        qDebug() << "D-Bus Error: could not connect to org.freedesktop.portal.Request";
     }
 #endif
 }
@@ -204,7 +204,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
 void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
 {
     if (response > 0) {
-        qDebug() << "DBus Error: the request to autostart was cancelled.";
+        qDebug() << "D-Bus Error: the request to autostart was cancelled.";
         return;
     }
 
