@@ -17,7 +17,7 @@
 
 #include "IconDownloader.h"
 #include "core/Config.h"
-#include "gui/UrlTools.h"
+#include "gui/UrlTools.h" // RESOLVED: Kept this include, as the functions it provides are used in the implementation below.
 #include "networking/NetworkManager.h"
 
 #include <QBuffer>
