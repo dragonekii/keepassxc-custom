@@ -210,7 +210,9 @@ set(gui_SOURCES
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
-        quickunlock/QuickUnlockInterface.cpp
+        quickunlock/QuickUnlockInterface.cpp)
+
+set(gui_SOURCES ${gui_SOURCES}
         ../share/icons/icons.qrc
         ../share/wizard/wizard.qrc)
 
@@ -227,6 +229,7 @@ if(APPLE)
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
     set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
 endif()
+
 
 if(UNIX AND NOT APPLE)
     list(APPEND gui_SOURCES
