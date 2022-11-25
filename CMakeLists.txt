@@ -19,6 +19,13 @@ cmake_minimum_required(VERSION 3.16.0)
 project(KeePassXC)
 set(APP_ID "org.keepassxc.${PROJECT_NAME}")
 
+# Set default build type if not specified (Restored from older PR)
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
+            "Choose the type of build, options are: Debug Release RelWithDebInfo Profile"
+            FORCE)
+endif()
+
 # Version Number
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "8")
