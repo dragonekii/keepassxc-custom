@@ -37,5 +37,6 @@ if(KPXC_FEATURE_BROWSER)
             PasskeyUtils.cpp)
 
     add_library(browser STATIC ${browser_SOURCES})
-    target_link_libraries(browser Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network ${BOTAN_LIBRARIES})
+    # Resolved: Link keepassxc_gui (from fix PR) but retain Qt6/Botan (from HEAD)
+    target_link_libraries(browser keepassxc_gui Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network ${BOTAN_LIBRARIES})
 endif()
