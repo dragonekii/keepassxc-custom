@@ -6034,17 +6034,6 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6387,7 +6376,9 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password Generator</source>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6431,6 +6422,9 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+        <source>Password Generator</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8749,19 +8743,11 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9317,6 +9303,57 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot generate valid passphrases because the wordlist is too short</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>malformed string, possible unescaped delimiter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing closing delimiter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1, row: %2, column: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from Entry(s)?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9431,6 +9468,9 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"></translation>
+    </message>
+        <source>start minimized to the system tray</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

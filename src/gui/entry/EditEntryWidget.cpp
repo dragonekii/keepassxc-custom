@@ -40,12 +40,12 @@
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
 #include "core/TimeDelta.h"
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/OpenSSHKeyGenDialog.h"
 #include "sshagent/SSHAgent.h"
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 #include "EntryURLModel.h"
 #include "browser/BrowserService.h"
 #endif
@@ -76,10 +76,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_advancedWidget(new QWidget(this))
     , m_iconsWidget(new EditWidgetIcons(this))
     , m_autoTypeWidget(new QWidget(this))
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     , m_sshAgentWidget(new QWidget(this))
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     , m_browserSettingsChanged(false)
     , m_browserWidget(new QWidget(this))
     , m_additionalURLsDataModel(new EntryURLModel(this))
@@ -102,11 +102,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupIcon();
     setupAutoType();
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     setupSSHAgent();
 #endif
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     setupBrowser();
 #endif
 
@@ -196,19 +196,19 @@ void EditEntryWidget::setupMain()
     m_usernameCompleter->setModel(m_usernameCompleterModel);
     m_mainUi->usernameComboBox->setCompleter(m_usernameCompleter);
 
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     m_mainUi->fetchFaviconButton->setIcon(icons()->icon("favicon-download"));
     m_mainUi->fetchFaviconButton->setDisabled(true);
 #else
     m_mainUi->fetchFaviconButton->setVisible(false);
 #endif
 
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
     m_mainUi->urlEdit->enableVerifyMode();
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(entryURLEdited(const QString&)));
 #endif
     connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
@@ -303,7 +303,7 @@ void EditEntryWidget::setupAutoType()
     // clang-format on
 }
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 void EditEntryWidget::setupBrowser()
 {
     if (config()->get(Config::Browser_Enabled).toBool()) {
@@ -494,7 +494,7 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
 #endif
     connect(m_mainUi->tagsList, SIGNAL(tagsEdited()), this, SLOT(setModified()));
@@ -525,7 +525,7 @@ void EditEntryWidget::setupEntryUpdate()
 
     // Properties and History tabs don't need extra connections
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     // SSH Agent tab
     if (sshAgent()->isEnabled()) {
         connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(toggled(bool)), this, SLOT(setModified()));
@@ -541,7 +541,7 @@ void EditEntryWidget::setupEntryUpdate()
     }
 #endif
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     if (config()->get(Config::Browser_Enabled).toBool()) {
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
@@ -589,7 +589,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
     }
 }
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
 void EditEntryWidget::setupSSHAgent()
 {
     m_pendingPrivateKey = "";
@@ -942,7 +942,7 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     switchToPage(Page::Main);
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     setPageHidden(m_sshAgentWidget, !sshAgent()->isEnabled());
 #endif
 
@@ -1064,13 +1064,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     }
     updateAutoTypeEnabled();
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     if (sshAgent()->isEnabled()) {
         updateSSHAgent();
     }
 #endif
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     if (config()->get(Config::Browser_Enabled).toBool()) {
         if (!hasPage(m_browserWidget)) {
             setupBrowser();
@@ -1226,7 +1226,7 @@ bool EditEntryWidget::commitEntry()
 
     m_autoTypeAssoc->removeEmpty();
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     toKeeAgentSettings(m_sshAgentSettings);
 #endif
 
@@ -1235,7 +1235,7 @@ bool EditEntryWidget::commitEntry()
         m_entry->beginUpdate();
     }
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     if (config()->get(Config::Browser_Enabled).toBool()) {
         updateBrowser();
     }
@@ -1323,7 +1323,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     if (sshAgent()->isEnabled()) {
         m_sshAgentSettings.toEntry(entry);
     }
@@ -1409,7 +1409,7 @@ void EditEntryWidget::clear()
     hideMessage();
 }
 
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
 void EditEntryWidget::updateFaviconButtonEnable(const QString& url)
 {
     m_mainUi->fetchFaviconButton->setDisabled(url.isEmpty());
