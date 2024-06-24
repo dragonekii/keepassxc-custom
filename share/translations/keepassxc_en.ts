@@ -6382,6 +6382,10 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>E&amp;xpire Entry…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Clear SSH Agent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9468,6 +9472,9 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"></translation>
+    </message>
+        <source>start minimized to the system tray</source>
         <translation type="unfinished"></translation>
     </message>
         <source>start minimized to the system tray</source>

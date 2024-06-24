@@ -25,3 +25,12 @@ include_directories(testguiattachments PRIVATE ${PROJECT_SOURCE_DIR}/src/gui/ent
 if(KPXC_FEATURE_BROWSER)
     add_unit_test(NAME testguibrowser SOURCES TestGuiBrowser.cpp ../util/TemporaryFile.cpp LIBS ${TEST_LIBRARIES})
 endif()
+
+if(KPXC_FEATURE_FDOSECRETS)
+    add_unit_test(NAME testguifdosecrets
+                  SOURCES TestGuiFdoSecrets.cpp ../util/TemporaryFile.cpp ../util/FdoSecretsProxy.cpp
+                  LIBS ${TEST_LIBRARIES}
+                  # The following doesn't work because dbus-run-session expects execname to be in PATH
+                  # dbus-run-session -- execname
+                  LAUNCHER dbus-run-session --config-file ${CMAKE_CURRENT_SOURCE_DIR}/../data/dbus/session.conf -- sh -c "exec ./$0")
+endif()
