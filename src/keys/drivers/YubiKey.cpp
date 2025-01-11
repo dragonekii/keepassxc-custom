@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017-2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@
 #include <QMutexLocker>
 #include <QSet>
 #include <QtConcurrent>
-
-QMutex YubiKey::s_interfaceMutex;
 
 YubiKey::YubiKey()
 {
@@ -73,8 +71,8 @@ bool YubiKey::isInitialized()
 
 bool YubiKey::findValidKeys()
 {
-    // Block operations on hardware keys while scanning
-    QMutexLocker lock(&s_interfaceMutex);
+    // RESOLVED: Adopted m_interfaces_detect_mutex from 'main' (771ea431) for detection.
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     m_connectedKeys = 0;
     m_findingKeys = true;
@@ -87,6 +85,7 @@ bool YubiKey::findValidKeys()
 
 void YubiKey::findValidKeysAsync()
 {
+    // RESOLVED: Kept the HEAD logic to prevent re-entrant scan using m_findingKeys.
     // Don't start another scan if we are already doing one
     if (!m_findingKeys) {
         m_findingKeys = true;
@@ -96,6 +95,8 @@ void YubiKey::findValidKeysAsync()
 
 YubiKey::KeyMap YubiKey::foundKeys()
 {
+    // RESOLVED: Adopted QMutexLocker from 'main' (771ea431) for thread-safe map access.
+    QMutexLocker lock(&m_interfaces_detect_mutex);
     KeyMap foundKeys = m_usbKeys;
     foundKeys.unite(m_pcscKeys);
 
@@ -109,7 +110,32 @@ int YubiKey::connectedKeys()
 
 QString YubiKey::errorMessage()
 {
-    return m_error;
+    // RESOLVED: Adopted the comprehensive error reporting from 'main' (771ea431).
+    QMutexLocker lock(&m_interfaces_detect_mutex);
+
+    QString error;
+    error.clear();
+    if (!m_error.isNull()) {
+        error += tr("General: ") + m_error;
+    }
+
+    QString usb_error = YubiKeyInterfaceUSB::instance()->errorMessage();
+    if (!usb_error.isNull()) {
+        if (!error.isNull()) {
+            error += " | ";
+        }
+        error += "USB: " + usb_error;
+    }
+
+    QString pcsc_error = YubiKeyInterfacePCSC::instance()->errorMessage();
+    if (!pcsc_error.isNull()) {
+        if (!error.isNull()) {
+            error += " | ";
+        }
+        error += "PCSC: " + pcsc_error;
+    }
+
+    return error;
 }
 
 /**
@@ -122,7 +148,7 @@ QString YubiKey::errorMessage()
  */
 bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     if (m_usbKeys.contains(slot)) {
         return YubiKeyInterfaceUSB::instance()->testChallenge(slot, wouldBlock);
@@ -147,6 +173,9 @@ bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 YubiKey::ChallengeResult
 YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response)
 {
+    // RESOLVED: Adopted QMutexLocker from 'main' (771ea431) to prevent challenges during detection.
+    QMutexLocker lock(&m_interfaces_detect_mutex);
+
     m_error.clear();
 
     // Prevent re-entrant access to hardware keys
