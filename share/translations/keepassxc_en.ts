@@ -9315,35 +9315,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passkey</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>malformed string, possible unescaped delimiter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>missing closing delimiter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1, row: %2, column: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9407,6 +9379,14 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>%1, row: %2, column: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
