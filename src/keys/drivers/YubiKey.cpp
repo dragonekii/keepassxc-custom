@@ -69,6 +69,7 @@ bool YubiKey::isInitialized()
     return m_initialized;
 }
 
+// Conflict 1 Resolution: Keep both findValidKeys overloads.
 bool YubiKey::findValidKeys()
 {
     // RESOLVED: Adopted m_interfaces_detect_mutex from 'main' (771ea431) for detection.
@@ -82,6 +83,17 @@ bool YubiKey::findValidKeys()
 
     return !m_usbKeys.isEmpty() || !m_pcscKeys.isEmpty();
 }
+
+void YubiKey::findValidKeys(const QMutexLocker<QRecursiveMutex>& locker)
+{
+    // Check QMutexLocker since version 6.4
+    Q_UNUSED(locker);
+
+    m_connectedKeys = 0;
+    m_usbKeys = YubiKeyInterfaceUSB::instance()->findValidKeys(m_connectedKeys);
+    m_pcscKeys = YubiKeyInterfacePCSC::instance()->findValidKeys(m_connectedKeys);
+}
+// End Conflict 1 Resolution
 
 void YubiKey::findValidKeysAsync()
 {
@@ -103,10 +115,13 @@ YubiKey::KeyMap YubiKey::foundKeys()
     return foundKeys;
 }
 
+// Conflict 2 Resolution: Adopt the QMutexLocker from main (f87883a2).
 int YubiKey::connectedKeys()
 {
+    QMutexLocker lock(&m_interfaces_detect_mutex);
     return m_connectedKeys;
 }
+// End Conflict 2 Resolution
 
 QString YubiKey::errorMessage()
 {
@@ -174,12 +189,14 @@ YubiKey::ChallengeResult
 YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response)
 {
     // RESOLVED: Adopted QMutexLocker from 'main' (771ea431) to prevent challenges during detection.
-    QMutexLocker lock(&m_interfaces_detect_mutex);
+    // NOTE: The next line was a redefinition of 'lock' that causes a compile error, renamed to 'detect_lock'
+    QMutexLocker detect_lock(&m_interfaces_detect_mutex);
 
     m_error.clear();
 
     // Prevent re-entrant access to hardware keys
-    QMutexLocker lock(&s_interfaceMutex);
+    // NOTE: The next line was a redefinition of 'lock', renamed to 'interface_lock'
+    QMutexLocker interface_lock(&s_interfaceMutex);
 
     // Try finding key on the USB interface first
     auto ret = YubiKeyInterfaceUSB::instance()->challenge(slot, challenge, response);
