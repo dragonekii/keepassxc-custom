@@ -24,6 +24,8 @@
 #include <QSet>
 #include <QtConcurrent>
 
+QMutex YubiKey::s_interfaceMutex;
+
 YubiKey::YubiKey()
 {
     int num_interfaces = 0;

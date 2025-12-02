@@ -89,6 +89,7 @@ private:
     void findValidKeys(const QMutexLocker<QRecursiveMutex>& locker);
 
     static YubiKey* m_instance;
+    static QMutex s_interfaceMutex;
 
     QTimer m_interactionTimer;
     bool m_initialized = false;
