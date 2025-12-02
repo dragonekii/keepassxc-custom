@@ -64,7 +64,7 @@ void FdoSecretsSettingsPage::switchToDatabaseSettings(DatabaseWidget* dbWidget)
     }
     // switch selected to current
     m_dbTabs->setCurrentWidget(dbWidget);
-    m_dbTabs->showDatabaseSettings();
+    m_dbTabs->showDatabaseSettings(true);
 
     // open settings (switch from app settings to m_dbTabs)
     emit requestSwitchToDatabases();
