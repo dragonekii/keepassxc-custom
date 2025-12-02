@@ -6,7 +6,6 @@ set(autotype_SOURCES
         AutoTypeMatchView.cpp
         AutoTypeSelectDialog.cpp
         PickcharsDialog.cpp
-        ../gui/widgets/ShortcutWidget.cpp
         WindowSelectComboBox.cpp)
 
 add_library(autotype STATIC ${autotype_SOURCES})
