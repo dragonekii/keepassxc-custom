@@ -28,6 +28,7 @@
 #include <QSet>
 
 #include "core/Global.h"
+#include "core/Entry.h"
 
 class Entry;
 
