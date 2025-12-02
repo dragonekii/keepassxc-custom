@@ -50,9 +50,9 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
     // Add two shortcuts to save the form CTRL+Enter and CTRL+S
-    auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_Return, this);
+    auto shortcut = new QShortcut(Qt::CTRL | Qt::Key_Return, this);
     connect(shortcut, &QShortcut::activated, this, [this] { applyPassword(); });
-    shortcut = new QShortcut(Qt::CTRL + Qt::Key_S, this);
+    shortcut = new QShortcut(Qt::CTRL | Qt::Key_S, this);
     connect(shortcut, &QShortcut::activated, this, [this] { applyPassword(); });
 
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));

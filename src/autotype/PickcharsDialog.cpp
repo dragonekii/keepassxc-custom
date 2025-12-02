@@ -77,7 +77,7 @@ PickcharsDialog::PickcharsDialog(const QString& string, QWidget* parent)
         m_ui->selectedChars->setText(text.left(text.size() - 1));
     });
     // Submit the form
-    shortcut = new QShortcut(Qt::CTRL + Qt::Key_S, this);
+    shortcut = new QShortcut(Qt::CTRL | Qt::Key_S, this);
     connect(shortcut, &QShortcut::activated, this, [this] { accept(); });
 }
 

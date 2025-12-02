@@ -66,19 +66,19 @@ PasswordWidget::PasswordWidget(QWidget* parent)
 
     m_toggleVisibleAction = new QAction(
         icons()->onOffIcon("password-show", false),
-        tr("Toggle Password (%1)").arg(QKeySequence(modifier + Qt::Key_H).toString(QKeySequence::NativeText)),
+        tr("Toggle Password (%1)").arg(QKeySequence(modifier | Qt::Key_H).toString(QKeySequence::NativeText)),
         this);
     m_toggleVisibleAction->setCheckable(true);
-    m_toggleVisibleAction->setShortcut(modifier + Qt::Key_H);
+    m_toggleVisibleAction->setShortcut(modifier | Qt::Key_H);
     m_toggleVisibleAction->setShortcutContext(Qt::WidgetShortcut);
     m_ui->passwordEdit->addAction(m_toggleVisibleAction, QLineEdit::TrailingPosition);
     connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordWidget::setShowPassword);
 
     m_passwordGeneratorAction = new QAction(
         icons()->icon("password-generator"),
-        tr("Generate Password (%1)").arg(QKeySequence(modifier + Qt::Key_G).toString(QKeySequence::NativeText)),
+        tr("Generate Password (%1)").arg(QKeySequence(modifier | Qt::Key_G).toString(QKeySequence::NativeText)),
         this);
-    m_passwordGeneratorAction->setShortcut(modifier + Qt::Key_G);
+    m_passwordGeneratorAction->setShortcut(modifier | Qt::Key_G);
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
     m_ui->passwordEdit->addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);

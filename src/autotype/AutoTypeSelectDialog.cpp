@@ -74,7 +74,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_ui->search, SIGNAL(returnPressed()), SLOT(activateCurrentMatch()));
     connect(&m_searchTimer, SIGNAL(timeout()), SLOT(performSearch()));
 
-    m_ui->searchCheckBox->setShortcut(Qt::CTRL + Qt::Key_F);
+    m_ui->searchCheckBox->setShortcut(Qt::CTRL | Qt::Key_F);
     connect(m_ui->searchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         setDelayedSearch(checked);
         performSearch();
@@ -333,7 +333,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
-    typeUrlAction->setShortcut(Qt::CTRL + Qt::Key_4);
+    typeUrlAction->setShortcut(Qt::CTRL | Qt::Key_4);
     typeUrlAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::URL);
     connect(typeUrlAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
@@ -344,7 +344,7 @@ void AutoTypeSelectDialog::buildActionMenu()
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"), nullptr);
     m_actionMenu->insertAction(copyUsernameAction, typeVirtualAction);
-    typeVirtualAction->setShortcut(Qt::CTRL + Qt::Key_5); // Using Key_5 to avoid conflict with Key_4 for URL
+    typeVirtualAction->setShortcut(Qt::CTRL | Qt::Key_5); // Using Key_5 to avoid conflict with Key_4 for URL
     connect(typeVirtualAction, &QAction::triggered, this, [&] {
         m_virtualMode = true;
         activateCurrentMatch();
