@@ -21,6 +21,7 @@
 
 #include "core/Global.h"
 #include <QPointer>
+#include <QObject>
 
 class Database;
 class Entry;
