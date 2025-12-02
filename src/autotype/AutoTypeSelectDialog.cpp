@@ -381,7 +381,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         }
     });
 
-    copyUrlAction->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_4);
+    copyUrlAction->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_4);
     copyUrlAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::URL);
     connect(copyUrlAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
