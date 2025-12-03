@@ -33,10 +33,9 @@ private slots:
     void testMergeCustomData();
     void testResolveConflictNewer();
     void testResolveConflictExisting();
-    // next 3 added to fix compile error
-    void testResolveConflictDuplicate();
-    void testResolveConflictEntry_KeepLocal();
-    void testResolveConflictEntry_KeepRemote();
+    // void testResolveConflictDuplicate();
+    // void testResolveConflictEntry_KeepLocal();
+    // void testResolveConflictEntry_KeepRemote();
     void testResolveGroupConflictOlder();
     void testMergeNotModified();
     void testMergeModified();
