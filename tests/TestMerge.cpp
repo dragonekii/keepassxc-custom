@@ -302,7 +302,7 @@ void TestMerge::testResolveConflictDuplicate()
     // make this entry newer than in original db
     auto updatedDestinationEntry = dbDestination->rootGroup()->children().at(0)->entries().at(0);
     const TimeInfo initialEntryTimeInfo = updatedDestinationEntry->timeInfo();
-    const TimeInfo updatedEntryTimeInfo = modificationTime(initialEntryTimeInfo, 1, 0, 0);
+    const TimeInfo updatedEntryTimeInfo = TimeInfo::modificationTime(initialEntryTimeInfo, 1, 0, 0);
 
     updatedDestinationEntry->setTimeInfo(updatedEntryTimeInfo);
 
