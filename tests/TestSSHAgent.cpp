@@ -24,6 +24,7 @@
 #include "sshagent/SSHAgent.h"
 
 #include <QTest>
+#include <QElapsedTimer>
 
 QTEST_GUILESS_MAIN(TestSSHAgent)
 
