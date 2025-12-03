@@ -70,14 +70,12 @@ macro(add_unit_test)
     set(TEST_OUTPUT ${TEST_OUTPUT} CACHE STRING "The output to generate when running the QTest unit tests")
 
     if(KDE4_TEST_OUTPUT STREQUAL "xml")
-        # OLD: add_test(${_test_NAME} ${_test_LAUNCHER} ${_test_NAME} -xml -o ${_test_NAME}.tml)
-        # NEW: Use $<TARGET_FILE:...>
-        add_test(${_test_NAME} ${_test_LAUNCHER} $<TARGET_FILE:${_test_NAME}> -xml -o ${_test_NAME}.tml)
-    else(KDE4_TEST_OUTPUT STREQUAL "xml")
-        # OLD: add_test(${_test_NAME} ${_test_LAUNCHER} ${_test_NAME})
-        # NEW: Use $<TARGET_FILE:...>
-        add_test(${_test_NAME} ${_test_LAUNCHER} $<TARGET_FILE:${_test_NAME}>)
-    endif(KDE4_TEST_OUTPUT STREQUAL "xml")
+        add_test(NAME ${_test_NAME} 
+                 COMMAND ${_test_LAUNCHER} ${_test_NAME} -xml -o ${_test_NAME}.tml)
+    else()
+        add_test(NAME ${_test_NAME} 
+                 COMMAND ${_test_LAUNCHER} ${_test_NAME})
+    endif()
 
     set_tests_properties(${_test_NAME} PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
 endmacro(add_unit_test)
