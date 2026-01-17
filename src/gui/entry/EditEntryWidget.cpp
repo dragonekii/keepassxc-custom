@@ -982,6 +982,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         m_mainUi->notesEdit->setFont(Font::defaultFont());
     }
 
+    m_mainUi->notesEdit->setTabStopDistance(
+        QFontMetrics(m_mainUi->notesEdit->font()).horizontalAdvance(QString(4, ' ')));
+
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
@@ -1573,7 +1576,7 @@ void EditEntryWidget::updateAutoTypeEnabled()
     m_autoTypeUi->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->customSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->sequenceEdit->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
-    m_autoTypeUi->openHelpButton->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
+    m_autoTypeUi->openHelpButton->setEnabled(autoTypeEnabled);
 
     m_autoTypeUi->assocView->setEnabled(autoTypeEnabled);
     m_autoTypeUi->assocAddButton->setEnabled(!m_history);
